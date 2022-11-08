@@ -28,7 +28,7 @@ class HeartShow:
         self.root.resizable(0,0)
         self.Board=Canvas(self.root,width=self.size,height=self.size,bg='black')
         self.Board.pack(fill=BOTH,expand=0)
-        self.Board.bind('<Motion>',self.moveCore)
+        self.Board.bind('<Motion>',self.moveCore)    #如果想改为鼠标左键拖动而不是自动跟随，将Motion改为B1-Motion
         self.root.after(1,self.heartJump)
         self.root.mainloop()
     
