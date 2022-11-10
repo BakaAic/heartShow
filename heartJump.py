@@ -102,12 +102,12 @@ class HeartShow:
             curPos_x=(self.heart_Pos[i][0]-self.core_Pos[0])*self.jumpExpand() -(self.heart_Pos[i][2]-self.core_Pos[0])*self.heart_Pos[i][4]/2 +self.core_Pos[0] 
             curPos_y=(self.heart_Pos[i][1]-self.core_Pos[1])*self.jumpExpand() +self.jumpOffset() -(self.heart_Pos[i][3]-self.core_Pos[1])*self.heart_Pos[i][4]/2 +self.core_Pos[1]
             curPos=(curPos_x, curPos_y)
-            self.Board.create_line(curPos[0],curPos[1],curPos[0]+1,curPos[1]+1,fill=self.getHeartColor(self.heart_Pos[i][4],self.colorMode),tags='heart_'+str(i))  
+            self.Board.create_rectangle(curPos[0],curPos[1],curPos[0]+1,curPos[1]+1,fill=self.getHeartColor(self.heart_Pos[i][4],self.colorMode),outline=self.getHeartColor(self.heart_Pos[i][4],self.colorMode),tags='heart_'+str(i))
 
             curPos_x=(self.heart_Pos[i][0]-self.core_Pos[0])-(self.heart_Pos[i][2]-self.core_Pos[0])*self.heart_Pos[i][4]/2 * -0.4 +self.core_Pos[0] 
             curPos_y=(self.heart_Pos[i][1]-self.core_Pos[1])-(self.heart_Pos[i][3]-self.core_Pos[1])*self.heart_Pos[i][4]/2 * -0.4 +self.core_Pos[1] 
             curPos=(curPos_x, curPos_y)
-            self.Board.create_line(curPos[0],curPos[1],curPos[0]+1,curPos[1]+1,fill='#770115',tags='heart_'+str(i)) 
+            self.Board.create_rectangle(curPos[0],curPos[1],curPos[0]+1,curPos[1]+1,fill='#770115',outline='#770115',tags='heart_'+str(i)) 
             
             _speed=self.speed * math.sqrt(abs(0-self.heart_Pos[i][4]))
             if _speed<0.01:
