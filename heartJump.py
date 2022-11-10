@@ -55,14 +55,14 @@ class HeartShow:
             _G=20+distanceRate*100
             _B=90+distanceRate*90
         else:
-            distanceRate=distanceRate*5
+            distanceRate=distanceRate*2
             if distanceRate>1:
                 distanceRate=1
             elif distanceRate<0:
                 distanceRate=0
             _R=245+distanceRate*10
-            _G=180-distanceRate*175
-            _B=195-distanceRate*190
+            _G=165-distanceRate*130
+            _B=170-distanceRate*135
         
         _color='#'+str(hex(int(_R)))[2:].zfill(2)+str(hex(int(_G)))[2:].zfill(2)+str(hex(int(_B)))[2:].zfill(2)
         return _color
@@ -107,7 +107,12 @@ class HeartShow:
             curPos_x=(self.heart_Pos[i][0]-self.core_Pos[0])-(self.heart_Pos[i][2]-self.core_Pos[0])*self.heart_Pos[i][4]/2 * -0.4 +self.core_Pos[0] 
             curPos_y=(self.heart_Pos[i][1]-self.core_Pos[1])-(self.heart_Pos[i][3]-self.core_Pos[1])*self.heart_Pos[i][4]/2 * -0.4 +self.core_Pos[1] 
             curPos=(curPos_x, curPos_y)
-            self.Board.create_rectangle(curPos[0],curPos[1],curPos[0]+1,curPos[1]+1,fill='#770115',outline='#770115',tags='heart_'+str(i)) 
+
+            if self.colorMode==1:
+                out_color='#770115'
+            else:
+                out_color='#551313'
+            self.Board.create_rectangle(curPos[0],curPos[1],curPos[0]+1,curPos[1]+1,fill=out_color,outline=out_color,tags='heart_'+str(i)) 
             
             _speed=self.speed * math.sqrt(abs(0-self.heart_Pos[i][4]))
             if _speed<0.01:
