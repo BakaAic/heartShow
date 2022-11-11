@@ -39,12 +39,13 @@ class heartJump:
         self.jumpInterval=2                         #跳动间隔 [0-15] 默认为2
         self.flashColor='#CF91A1'                   #闪烁颜色 [#000000-#FFFFFF]
         self.flashRate=0.03                         #闪烁概率 [0-1]
+        self.particleSwitch=1                       #粒子开关 [0-1] 为1时开启粒子
         self.particleDiffusionSize=80               #粒子扩散大小 [30-150]
         self.particleFlashRate=0.2                  #粒子闪烁率 [0-1]
         self.particleThickness=2                    #粒子厚度 [1-3]
         self.particleColor_state1='#D25979'         #粒子颜色状态1 [#000000-#FFFFFF]
         self.particleColor_state2='#AB3554'         #粒子颜色状态2 [#000000-#FFFFFF]
-        
+
         #==========↑可调参数↑==========#
         self.rohtua_=chr(65)+chr(105)+chr(107)+chr(107)+chr(111)
         self.correspondingPos=correspondingPos  
@@ -77,49 +78,50 @@ class heartJump:
     def heartShow(self):
         self.Board.delete('heart')
         #粒子效果部分         
-        for data in self.correspondingPos:
-            for i in range(self.particleThickness):          
-                if random.random()<=self.particleFlashRate:
-                    
-                    if random.random()>self.flashRate:
-                        _color=self.particleColorChange(abs(self.FrameList[self.jumpFrame]))
-                    else:
-                        _color=self.flashColor
+        if self.particleSwitch:
+            for data in self.correspondingPos:
+                for i in range(self.particleThickness):          
+                    if random.random()<=self.particleFlashRate:
                         
-                    _L1=-math.log(random.random())*0.15
-                    if _L1>1:
-                        _L1=1
-                    _L2=-math.log(random.random())*0.15
-                    if _L2>1:
-                        _L2=1
-                    _R1=random.random()*0.1
-                    _R2=random.random()*0.1
-                    _negaRate=1
-                    if self.FrameList[self.jumpFrame]<0:
-                        _negaRate=5
-                    randomPos_x=data[0][0] +(data[0][0]-self.centerPos[0])*0.32 *(_L1*abs(self.FrameList[self.jumpFrame]))*_negaRate *abs(self.FrameList[self.jumpFrame]) +(data[0][0]-self.centerPos[0])*_R1
-                    randomPos_y=data[0][1] +(data[0][1]-self.centerPos[1])*0.32 *(_L2*abs(self.FrameList[self.jumpFrame]))*_negaRate *abs(self.FrameList[self.jumpFrame]) +(data[0][1]-self.centerPos[1])*_R2
-                    if self.pixelMode==1 or self.pixelMode==3:
-                        self.Board.create_line(randomPos_x ,randomPos_y ,randomPos_x +1 ,randomPos_y +1 ,fill=_color,tags='heart')
-                    elif self.pixelMode==2:
-                        self.Board.create_oval(randomPos_x ,randomPos_y ,randomPos_x +2,randomPos_y +2,fill=_color,outline=_color,tags='heart')
-                        
-                if random.random()<=self.particleFlashRate:                    
-                    if random.random()>self.flashRate:
-                        _color=self.particleColorChange(abs(self.FrameList[self.jumpFrame]))
-                    else:
-                        _color=self.flashColor
-                    _R1=random.random()*0.04
-                    _R2=random.random()*0.04
-                    _negaRate=1
-                    if self.FrameList[self.jumpFrame]<0:
-                        _negaRate=5
-                    randomPos_x=data[0][0] -(data[0][0]-self.centerPos[0]) *_negaRate *(abs(self.FrameList[self.jumpFrame]*2)+1.5)*_R1 +(data[0][0]-self.centerPos[0])*0.11
-                    randomPos_y=data[0][1] -(data[0][1]-self.centerPos[1]) *_negaRate *(abs(self.FrameList[self.jumpFrame]*2)+1.5)*_R2 +(data[0][1]-self.centerPos[1])*0.11
-                    if self.pixelMode==1 or self.pixelMode==3:
-                        self.Board.create_line(randomPos_x ,randomPos_y ,randomPos_x +1 ,randomPos_y +1 ,fill=_color,tags='heart')
-                    elif self.pixelMode==2:
-                        self.Board.create_oval(randomPos_x ,randomPos_y ,randomPos_x +2,randomPos_y +2,fill=_color,outline=_color,tags='heart')
+                        if random.random()>self.flashRate:
+                            _color=self.particleColorChange(abs(self.FrameList[self.jumpFrame]))
+                        else:
+                            _color=self.flashColor
+                            
+                        _L1=-math.log(random.random())*0.15
+                        if _L1>1:
+                            _L1=1
+                        _L2=-math.log(random.random())*0.15
+                        if _L2>1:
+                            _L2=1
+                        _R1=random.random()*0.1
+                        _R2=random.random()*0.1
+                        _negaRate=1
+                        if self.FrameList[self.jumpFrame]<0:
+                            _negaRate=5
+                        randomPos_x=data[0][0] +(data[0][0]-self.centerPos[0])*0.32 *(_L1*abs(self.FrameList[self.jumpFrame]))*_negaRate *abs(self.FrameList[self.jumpFrame]) +(data[0][0]-self.centerPos[0])*_R1
+                        randomPos_y=data[0][1] +(data[0][1]-self.centerPos[1])*0.32 *(_L2*abs(self.FrameList[self.jumpFrame]))*_negaRate *abs(self.FrameList[self.jumpFrame]) +(data[0][1]-self.centerPos[1])*_R2
+                        if self.pixelMode==1 or self.pixelMode==3:
+                            self.Board.create_line(randomPos_x ,randomPos_y ,randomPos_x +1 ,randomPos_y +1 ,fill=_color,tags='heart')
+                        elif self.pixelMode==2:
+                            self.Board.create_oval(randomPos_x ,randomPos_y ,randomPos_x +2,randomPos_y +2,fill=_color,outline=_color,tags='heart')
+                            
+                    if random.random()<=self.particleFlashRate:                    
+                        if random.random()>self.flashRate:
+                            _color=self.particleColorChange(abs(self.FrameList[self.jumpFrame]))
+                        else:
+                            _color=self.flashColor
+                        _R1=random.random()*0.04
+                        _R2=random.random()*0.04
+                        _negaRate=1
+                        if self.FrameList[self.jumpFrame]<0:
+                            _negaRate=5
+                        randomPos_x=data[0][0] -(data[0][0]-self.centerPos[0]) *_negaRate *(abs(self.FrameList[self.jumpFrame]*2)+1.5)*_R1 +(data[0][0]-self.centerPos[0])*0.11
+                        randomPos_y=data[0][1] -(data[0][1]-self.centerPos[1]) *_negaRate *(abs(self.FrameList[self.jumpFrame]*2)+1.5)*_R2 +(data[0][1]-self.centerPos[1])*0.11
+                        if self.pixelMode==1 or self.pixelMode==3:
+                            self.Board.create_line(randomPos_x ,randomPos_y ,randomPos_x +1 ,randomPos_y +1 ,fill=_color,tags='heart')
+                        elif self.pixelMode==2:
+                            self.Board.create_oval(randomPos_x ,randomPos_y ,randomPos_x +2,randomPos_y +2,fill=_color,outline=_color,tags='heart')
                 
         #心形部分
         for point in self.point:
